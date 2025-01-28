@@ -1,7 +1,7 @@
 package fr.univrennes.istic.l2gen.geometrie;
 
 public class Cercle implements IForme {
-    Point centre;
+    private Point centre;
     private double rayon;
 
     /**

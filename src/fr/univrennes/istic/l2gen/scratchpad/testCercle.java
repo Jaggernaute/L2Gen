@@ -1,10 +1,10 @@
-package fr.univrennes.istic.l2gen;
+package fr.univrennes.istic.l2gen.scratchpad;
 
 import fr.univrennes.istic.l2gen.geometrie.Cercle;
 import fr.univrennes.istic.l2gen.geometrie.Groupe;
 import fr.univrennes.istic.l2gen.geometrie.IForme;
 
-public class App {
+public class testCercle {
     static Groupe arbre(IForme figure) {
         Groupe groupe = new Groupe(figure);
         IForme mini = figure.dupliquer();
