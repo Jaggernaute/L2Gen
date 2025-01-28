@@ -108,4 +108,14 @@ public class Cercle implements IForme {
             throw new IllegalArgumentException("La largeur et la hauteur doivent etre les memes");
         this.rayon *= hauteur;
     }
+
+    /**
+     * @param base 
+     * @param profondeur
+     * @return
+     */
+    @Override
+    public IForme fractale(IForme base, int profondeur) {
+        return null;
+    }
 }

@@ -9,4 +9,5 @@ public interface IForme {
     double hauteur();
     double largeur();
     void redimensionner(double largeur, double hauteur);
+    IForme fractale(IForme base, int profondeur);
 }

@@ -221,4 +221,14 @@ public class Groupe implements IForme {
             forme.redimensionner(largeur, hauteur);
         }
     }
+
+    /**
+     * @param base 
+     * @param profondeur
+     * @return
+     */
+    @Override
+    public IForme fractale(IForme base, int profondeur) {
+        return null;
+    }
 }
