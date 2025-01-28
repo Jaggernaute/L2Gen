@@ -19,7 +19,34 @@ public class Ligne implements IForme {
      */
     @Override
     public Point centre() {
-        return null;
+        if (sommets.isEmpty()) {
+            throw new IllegalStateException("La ligne ne contient aucun sommet.");
+        }
+
+        double maxDistance = 0;
+        Point p1 = null;
+        Point p2 = null;
+
+        // Trouver les deux points les plus éloignés
+        for (Point a : sommets) {
+            for (Point b : sommets) {
+                double distance = Math.sqrt(Math.pow(a.x() - b.x(), 2) + Math.pow(a.y() - b.y(), 2));
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                    p1 = a;
+                    p2 = b;
+                }
+            }
+        }
+
+        if (p1 == null) {
+            throw new IllegalStateException("Quelque chose s'est mal passe");
+        }
+
+        double centerX = (p1.x() + p2.x()) / 2;
+        double centerY = (p1.y() + p2.y()) / 2;
+
+        return new Point(centerX, centerY);
     }
 
     /**
@@ -28,7 +55,7 @@ public class Ligne implements IForme {
      */
     @Override
     public void deplacer(double x, double y) {
-
+        this.sommets.forEach(point -> point.plus(x, y));
     }
 
     /**
