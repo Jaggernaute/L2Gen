@@ -48,7 +48,7 @@ Ce projet a pour objectif de développer une application logicielle en Java perm
 | Ligne          | Développement de la classe Ligne                           | ⏳ À faire  |
 | Polygone       | Développement de la classe Polygone                        | ⏳ À faire  |
 | Rectangle      | Développement de la classe Rectangle                       | ⏳ À faire  |
-| Triangle       | Développement de la classe Triangle                        | ⏳ À faire  |
+| Triangle       | Développement de la classe Triangle                        | ✅ Terminé  |
 
 ## Attribution des Responsabilités
 

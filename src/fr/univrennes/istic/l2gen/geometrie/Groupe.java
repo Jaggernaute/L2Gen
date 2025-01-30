@@ -5,23 +5,23 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Groupe implements IForme {
-    private List<IForme> formes;
+    private final List<IForme> formes;
 
     /**
      * Constructeur d'un groupe de formes.
      *
-     * @param formes autant de formes que necessaires [0;any]
+     * @param formes autant de formes que nécessaires [0;any]
      */
     public Groupe(IForme ... formes) {
         this.formes = new ArrayList<>(Arrays.asList(formes));
     }
 
     /**
-     * Ajoute une IForme au groupe, et retourne ce meme groupe une foi l'operation terminee
-     * Pourquoi return le groupe s'il est modiffie ?
+     * Ajoute une IForme au groupe, et retourne ce meme groupe une foi operation terminée
+     * Pourquoi return le groupe s'il est modifié ?
      *
-     * @param iForme forme ou groupe a ajouter au groupe
-     * @return
+     * @param iForme forme ou groupe à ajouter au groupe
+     * @return this le groupe.
      */
     public Groupe ajouter(IForme iForme) {
         formes.add(iForme);
@@ -79,8 +79,13 @@ public class Groupe implements IForme {
     }
 
     /**
-     * @param x
-     * @param y
+     * Déplace le groupe en appliquant un décalage aux coordonnées de ses IFormes.
+     * </br>
+     * Cette méthode appelle la fonction `deplacer()` de chaque forme du groupe
+     * (récursivement si le groupe contient un groupe).
+     *
+     * @param x Déplacement à appliquer sur l'axe X.
+     * @param y Déplacement à appliquer sur l'axe Y.
      */
     @Override
     public void deplacer(double x, double y) {
@@ -110,13 +115,21 @@ public class Groupe implements IForme {
     }
 
     /**
-     * @return 
+     * Génère une représentation SVG du triangle.
+     * </br>
+     * La méthode construit une paire de balises {@code <g> ... <g/>} contenant le code SVG de toutes
+     * les IFormes que le groupe contient, permettant ainsi de l'afficher dans un document SVG.
+     *
+     * @return Une chaîne de caractères représentant le groupe sous forme de balise SVG.
+     *         Exemple de sortie :
+     *         {@code <g> ... <g/>}
      */
     @Override
     public String enSVG() {
         StringBuilder sb = new StringBuilder();
         sb.append("<g>\n");
         for (IForme forme : formes) {
+            sb.append("  ");
             sb.append(forme.enSVG());
             sb.append("\n");
         }
@@ -221,6 +234,8 @@ public class Groupe implements IForme {
             forme.redimensionner(largeur, hauteur);
         }
     }
+
+    // TODO: fractale
 
     /**
      * @param base 

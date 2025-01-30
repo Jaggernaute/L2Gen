@@ -1,0 +1,17 @@
+<svg version="1.1"
+     baseProfile="full"
+     width="500" height="500"
+     xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <polygon points = " 192.0,128.0 256.0,128.0 256.0,256.0  "
+                 fill = " white " stroke = " black "  />
+        <polygon points = " 213.33333333333331,149.33333333333331 245.33333333333331,149.33333333333331 245.33333333333331,213.33333333333331  "
+                 fill = " white " stroke = " black "  />
+        <g>
+            <polygon points = " 224.0,160.0 240.0,160.0 240.0,192.0  "
+                     fill = " white " stroke = " black "  />
+            <polygon points = " 229.33333333333331,165.33333333333331 237.33333333333331,165.33333333333331 237.33333333333331,181.33333333333331  "
+                     fill = " white " stroke = " black "  />
+        </g>
+    </g>
+</svg>
