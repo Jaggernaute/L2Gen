@@ -17,9 +17,9 @@ public class testLigne {
     }
 
     public static void main(String[] args) {
-        //Groupe arbre = arbre( new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
-        //System.out.println(arbre.description(0));
-        //System.out.println(arbre.enSVG());
+        Groupe arbre = arbre( new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
+        System.out.println(arbre.description(0));
+        System.out.println(arbre.enSVG());
 
         IForme f = new Ligne (128, 128, 128, 256, 256, 128, 256, 256);
         System.out.print(f.description(1));

@@ -2,78 +2,101 @@ package fr.univrennes.istic.l2gen.geometrie;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Ligne implements IForme {
-
-    private List<Point> sommets;
+    private final List<Point> sommets;
 
     public Ligne(double ... points) {
-        sommets = new ArrayList<Point>();
+        if (points.length <= 2) {
+            throw new IllegalStateException("Une ligne doit avoir au moins deux sommets.");
+        }
+
+        sommets = new ArrayList<>();
         for (int i = 0; i < points.length-1; i+=2) {
             sommets.add(new Point(points[i], points[i+1]));
         }
     }
 
-    /**
-     * @return 
-     */
     @Override
-    public Point centre() {
-        if (sommets.isEmpty()) {
-            throw new IllegalStateException("La ligne ne contient aucun sommet.");
+    public double hauteur() {
+        if (sommets.size() <= 2) {
+            throw new IllegalStateException("Une ligne doit avoir au moins deux sommets.");
         }
 
-        double maxDistance = 0;
-        Point p1 = null;
-        Point p2 = null;
+        // initialiser min et max a des valeurs impossibles pour comparaison apres.
+        double minY = Double.MAX_VALUE;
+        double maxY = Double.MIN_VALUE;
 
-        // Trouver les deux points les plus éloignés
-        for (Point a : sommets) {
-            for (Point b : sommets) {
-                double distance = Math.sqrt(Math.pow(a.x() - b.x(), 2) + Math.pow(a.y() - b.y(), 2));
-                if (distance > maxDistance) {
-                    maxDistance = distance;
-                    p1 = a;
-                    p2 = b;
-                }
+        for (Point point : sommets) {
+            double y = point.y();
+            if (y < minY) {
+                minY = y;
+            }
+            if (y > maxY) {
+                maxY = y;
             }
         }
 
-        if (p1 == null) {
-            throw new IllegalStateException("Quelque chose s'est mal passe");
+        return maxY - minY;
+    }
+
+    @Override
+    public double largeur() {
+        if (sommets.size() <= 2) {
+            throw new IllegalStateException("Une ligne doit avoir au moins deux sommets.");
         }
 
-        double centerX = (p1.x() + p2.x()) / 2;
-        double centerY = (p1.y() + p2.y()) / 2;
+        // initialiser min et max a des valeurs impossibles pour comparaison apres.
+        double minX = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
 
-        return new Point(centerX, centerY);
+        for (Point point : sommets) {
+            double x = point.x();
+            if (x < minX) {
+                minX = x;
+            }
+            if (x > maxX) {
+                maxX = x;
+            }
+        }
+
+        return maxX - minX;
     }
 
-    /**
-     * @param x 
-     * @param y
-     */
-    @Override
-    public void deplacer(double x, double y) {
-        this.sommets.forEach(point -> point.plus(x, y));
+    public void ajouterSommet(Point p){
+        sommets.add(p);
+    }
+    public void ajouterSommetD(double x, double y){
+        sommets.add(new Point(x,y));
+    }
+    public List<Point> getsommets(){
+        return sommets;
     }
 
-    /**
-     * @param indentation 
-     * @return
-     */
-    @Override
-    public String description(int indentation) {
-        StringBuilder sb = new StringBuilder();
+    public Point centre(){
+        int moyx = 0;
+        int moyy = 0;
+        for (Point point : sommets) {
+            moyx += (int)point.x();
+            moyy += (int)point.y();
+        }
+        moyx = moyx/ sommets.size();
+        moyy = moyy/ sommets.size();
+        Point centre = new Point(moyx, moyy);
+        return centre;
+    }
+
+    public String description(int indentation){
+        StringBuilder des = new StringBuilder();
         String indent = "  ".repeat(indentation);
-
-        sb.append(indent).append("Ligne ");
+        des.append(indent).append("Ligne ");
         for (Point p : sommets) {
-            sb.append(p.x()).append(",").append(p.y()).append(" ");
+            des.append((int)p.x()).append(",").append((int)p.y()).append(" ");
         }
-
-        sb.append("\n");
-        return sb.toString();
+        des.append("\n");
+        return des.toString();
     }
 
     /**
@@ -81,40 +104,54 @@ public class Ligne implements IForme {
      */
     @Override
     public String enSVG() {
-        return "";
+        StringBuilder s = new StringBuilder();
+        for (Point point : sommets) {
+            s.append(point.x()).append(",").append(point.y()).append(" ");
+        }
+        return String.format( "<polygon points = \" %s \"\n fill = \" white \" stroke = \" black \"  />", s);
     }
 
-    /**
-     * @return 
-     */
-    @Override
-    public IForme dupliquer() {
-        return null;
+    public void deplacer(double x, double y) {
+        for (int i = 0; i < sommets.size(); i++) {
+            Point p = sommets.get(i);
+            sommets.set(i, new Point(p.x() + x, p.y() + y));
+        }
     }
 
-    /**
-     * @return 
-     */
-    @Override
-    public double hauteur() {
-        return 0;
+    public IForme dupliquer(){
+        List<Point> pointsCopy = new ArrayList<>();
+        for (Point point : sommets) {
+            pointsCopy.add(new Point(point.x(), point.y()));
+        }
+        return new Ligne(
+                pointsCopy
+                        .stream()
+                        .filter(Objects::nonNull)
+                        .flatMap(
+                                p -> Stream.of(p.x(), p.y())
+                                )
+                        .mapToDouble(p -> p)
+                        .toArray()
+        );
     }
 
-    /**
-     * @return 
-     */
-    @Override
-    public double largeur() {
-        return 0;
-    }
 
-    /**
-     * @param largeur 
-     * @param hauteur
-     */
     @Override
     public void redimensionner(double largeur, double hauteur) {
+        if (sommets.size() <= 2) {
+            throw new IllegalStateException("Une ligne doit avoir au moins deux sommets.");
+        }
+        Point centre = centre();
 
+        for (int i = 0; i < sommets.size(); i++) {
+            Point p = sommets.get(i);
+
+            // Appliquer l'échelle autour du centre
+            double newX = centre.x() + (p.x() - centre.x()) * largeur;
+            double newY = centre.y() + (p.y() - centre.y()) * hauteur;
+
+            sommets.set(i, new Point(newX, newY));
+        }
     }
 
     /**
