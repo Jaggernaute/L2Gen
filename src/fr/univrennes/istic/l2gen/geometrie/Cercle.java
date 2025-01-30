@@ -51,7 +51,9 @@ public class Cercle implements IForme {
     /**
      * Génère une représentation SVG du Cercle.
      *
-     * @return Une chaîne de caractères représentant le Cercle en balise SVG.
+     * @return Une chaîne de caractères représentant le groupe sous forme de balise SVG.
+     *         Exemple de sortie :
+     *         {@code <circle cx="centreX" cy="centreY" r="rayon" fill="white" stroke="black"/>}
      */
     @Override
     public String enSVG() {
