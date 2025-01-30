@@ -37,12 +37,13 @@ public class Triangle implements IForme {
         double sumy = 0;
 
         for (Point point : sommets) {
-            sumx = point.x();
-            sumy = point.y();
+            sumx += point.x(); // ✅ Ajoute les valeurs correctement
+            sumy += point.y();
         }
 
-        return new Point(sumx/3, sumy/3);
+        return new Point(sumx / 3, sumy / 3); // ✅ Moyenne correcte
     }
+
 
     /**
      * @param x 
@@ -50,8 +51,13 @@ public class Triangle implements IForme {
      */
     @Override
     public void deplacer(double x, double y) {
-        this.sommets.forEach(point -> point.plus(x,y));
+        for (int i = 0; i < sommets.size(); i++) {
+            Point p = sommets.get(i);
+            sommets.set(i, new Point(p.x() + x, p.y() + y)); // ✅ Met à jour chaque sommet
+        }
     }
+
+
 
     /**
      * @param indentation 
@@ -76,16 +82,11 @@ public class Triangle implements IForme {
      */
     @Override
     public String enSVG() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (Point point : sommets) {
-            s += point.x() + "," + point.y();
+            s.append(point.x()).append(",").append(point.y()).append(" ");
         }
-        return String.format(
-                "< polygon points = \" %s \"\n" +
-                        "fill = \" white \" stroke = \" black \" / >",
-                s
-
-        );
+        return String.format( "<polygon points = \" %s \"\n fill = \" white \" stroke = \" black \"  />", s);
     }
 
     /**
@@ -97,7 +98,7 @@ public class Triangle implements IForme {
         for (Point point : sommets) {
             pointsCopy.add(new Point(point.x(), point.y()));
         }
-        return new Groupe(pointsCopy.toArray(new IForme[0]));
+        return new Triangle(pointsCopy.get(0), pointsCopy.get(1), pointsCopy.get(2));
     }
 
     /**
@@ -153,13 +154,27 @@ public class Triangle implements IForme {
     }
 
     /**
-     * @param largeur 
-     * @param hauteur
+     * Redimensionne le triangle en ajustant les sommets par rapport à son centre.
+     *
+     * @param largeur  Facteur d'échelle sur l'axe X (horizontal).
+     * @param hauteur  Facteur d'échelle sur l'axe Y (vertical).
      */
     @Override
     public void redimensionner(double largeur, double hauteur) {
-        System.out.println("NON !");
+        Point centre = centre();
+
+        for (int i = 0; i < sommets.size(); i++) {
+            Point p = sommets.get(i);
+
+            // Appliquer l'échelle autour du centre
+            double newX = centre.x() + (p.x() - centre.x()) * largeur;
+            double newY = centre.y() + (p.y() - centre.y()) * hauteur;
+
+            sommets.set(i, new Point(newX, newY));
+        }
     }
+
+
 
     /**
      * @param base 

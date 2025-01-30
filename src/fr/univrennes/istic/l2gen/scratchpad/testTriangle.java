@@ -1,6 +1,5 @@
 package fr.univrennes.istic.l2gen.scratchpad;
 
-import fr.univrennes.istic.l2gen.geometrie.Cercle;
 import fr.univrennes.istic.l2gen.geometrie.Groupe;
 import fr.univrennes.istic.l2gen.geometrie.IForme;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
