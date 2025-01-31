@@ -34,7 +34,7 @@ public class Cercle implements IForme {
      */
     @Override
     public void deplacer(double x, double y) {
-        this.centre = new Point(centre().x() + x, centre().y() + y);
+        this.centre.plus(x, y);
     }
 
     /**
