@@ -30,10 +30,9 @@ Ce projet a pour objectif de développer une application logicielle en Java perm
    │   └── fr/univrennes/istic/l2gen/geometrie/
    │       ├── Cercle.java
    │       ├── Groupe.java
-   │       ├── Hexagone.java
    │       ├── IForme.java
+   │       ├── Ligne.java
    │       ├── Point.java
-   │       ├── Polygone.java
    │       ├── Rectangle.java
    │       └── Triangle.java
    └── README.md
