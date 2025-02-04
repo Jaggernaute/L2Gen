@@ -1,0 +1,13 @@
+<svg version="1.1"
+     baseProfile="full"
+     width="500" height="500"
+     xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <rect x="128,0" y="192,0" width="256,0" height="128,0" fill="white" stroke="black" />
+        <rect x="192,0" y="224,0" width="128,0" height="64,0" fill="white" stroke="black" />
+        <g>
+            <rect x="224,0" y="240,0" width="64,0" height="32,0" fill="white" stroke="black" />
+            <rect x="240,0" y="248,0" width="32,0" height="16,0" fill="white" stroke="black" />
+        </g>
+    </g>
+</svg>
